@@ -1,0 +1,11 @@
+services:
+  mcp-server:
+    build: .
+    container_name: camofox-mcp
+    volumes:
+      - ./screenshots:/app/screenshots
+    environment:
+      - SCREENSHOT_PATH=/app/screenshots
+    stdin_open: true
+    tty: true
+    restart: always

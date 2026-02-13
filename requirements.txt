@@ -1,0 +1,6 @@
+fastmcp
+camoufox[napi]
+playwright
+pytest
+pytest-asyncio
+python-dotenv
