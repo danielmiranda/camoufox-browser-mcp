@@ -1,6 +1,7 @@
 import os
 import base64
 import asyncio
+from markdownify import markdownify as md
 from fastmcp import FastMCP
 from session_manager import SessionManager
 
@@ -87,6 +88,16 @@ async def browser_list_links(session_id: str) -> list:
     page = session["page"]
     links = await page.eval_on_selector_all("a", "elements => elements.map(e => ({ text: e.innerText, href: e.href }))")
     return links
+
+@mcp.tool()
+async def browser_get_markdown(session_id: str) -> str:
+    """Get the current page content as Markdown."""
+    session = await manager.get_session(session_id)
+    if not session:
+        return f"Error: Session {session_id} not found."
+    
+    html = await session["page"].content()
+    return md(html, heading_style="ATX")
 
 @mcp.tool()
 async def browser_snapshot(session_id: str) -> str:

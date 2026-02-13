@@ -23,6 +23,7 @@ Enable AI agents (such as Claude, GPT, etc.) to interact with the modern web wit
 | :--- | :--- |
 | `browser_navigate` | Navigates to a URL and creates/reuses a persistent session. |
 | `browser_interact` | Performs actions like `click`, `type`, `scroll_up`, `scroll_down`. |
+| `browser_get_markdown`| Converts current page to Markdown for AI token efficiency. |
 | `browser_list_links`| Extracts all links and their descriptive text from the current page. |
 | `browser_screenshot`| Captures the current view (Base64 + optional file). |
 | `browser_snapshot` | Retrieves the raw HTML content of the session. |

@@ -4,3 +4,4 @@ playwright
 pytest
 pytest-asyncio
 python-dotenv
+markdownify
