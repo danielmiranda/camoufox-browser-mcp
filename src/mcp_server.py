@@ -3,6 +3,7 @@ import base64
 import asyncio
 from markdownify import markdownify as md
 from fastmcp import FastMCP
+from fastmcp.utilities.types import Image
 from session_manager import SessionManager
 
 # Initialize FastMCP server
@@ -54,29 +55,26 @@ async def browser_interact(session_id: str, action: str, selector: str = None, t
         return f"Unknown action: {action}"
 
 @mcp.tool()
-async def browser_screenshot(session_id: str, filename: str = None) -> dict:
+async def browser_screenshot(session_id: str, filename: str = None) -> Image:
     """
     Capture a screenshot.
-    Returns a dict with 'base64' and 'file_path' if saved.
+    Returns an Image object (recognized as image resource).
     """
     session = await manager.get_session(session_id)
     if not session:
-        return {"error": f"Session {session_id} not found."}
+        raise ValueError(f"Session {session_id} not found.")
     
     page = session["page"]
     
-    # Take screenshot as bytes for base64
+    # Take screenshot as bytes
     screenshot_bytes = await page.screenshot()
-    base64_image = base64.b64encode(screenshot_bytes).decode('utf-8')
-    
-    result = {"base64": base64_image}
     
     if filename:
         full_path = os.path.join(SCREENSHOT_PATH, filename)
-        await page.screenshot(path=full_path)
-        result["file_path"] = full_path
-        
-    return result
+        with open(full_path, "wb") as f:
+            f.write(screenshot_bytes)
+    
+    return Image(data=screenshot_bytes, format="png")
 
 @mcp.tool()
 async def browser_list_links(session_id: str) -> list:

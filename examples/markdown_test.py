@@ -61,7 +61,7 @@ def main():
         client.send_notification("notifications/initialized", {})
 
         # 2. Open Page
-        url = "https://news.ycombinator.com/news"
+        url = "https://neuquen.gob.ar"
         print(f"\n[1/3] Opening page: {url}")
         res = client.send_request("tools/call", {
             "name": "browser_navigate", 
